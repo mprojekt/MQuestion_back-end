@@ -4,24 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "question")
@@ -44,13 +29,13 @@ public class Question implements Serializable {
     private Timestamp endDateTime;
     
     @Column(name = "show_answer")
-    private boolean isEnabledShowResultNow;
+    private boolean enabledShowResultNow;
     
     @Column(name = "number_answers")
     private int numberAnswersToCheck;
     
     @Column(name = "notification")
-    private boolean isEnabledNotificationAfterEnd;
+    private boolean enabledNotificationAfterEnd;
     
     @Column(name = "email")
     private String emailToNotification;
@@ -78,9 +63,9 @@ public class Question implements Serializable {
             boolean isEnabledNotificationAfterEnd, Type typeQuestion, List<Answer> thisQuestionAnswers) {
         this.title = title;
         this.content = content;
-        this.isEnabledShowResultNow = isEnabledShowResultNow;
+        this.enabledShowResultNow = isEnabledShowResultNow;
         this.numberAnswersToCheck = numberAnswersToCheck;
-        this.isEnabledNotificationAfterEnd = isEnabledNotificationAfterEnd;
+        this.enabledNotificationAfterEnd = isEnabledNotificationAfterEnd;
         this.typeQuestion = typeQuestion;
         this.thisQuestionAnswers = thisQuestionAnswers;
     }
@@ -141,12 +126,12 @@ public class Question implements Serializable {
         this.endDateTime = endDateTime;
     }
 
-    public boolean isIsEnabledShowResultNow() {
-        return isEnabledShowResultNow;
+    public boolean isEnabledShowResultNow() {
+        return enabledShowResultNow;
     }
 
-    public void setIsEnabledShowResultNow(boolean isEnabledShowResultNow) {
-        this.isEnabledShowResultNow = isEnabledShowResultNow;
+    public void setEnabledShowResultNow(boolean isEnabledShowResultNow) {
+        this.enabledShowResultNow = isEnabledShowResultNow;
     }
 
     public int getNumberAnswersToCheck() {
@@ -157,12 +142,12 @@ public class Question implements Serializable {
         this.numberAnswersToCheck = numberAnswersToCheck;
     }
 
-    public boolean isIsEnabledNotificationAfterEnd() {
-        return isEnabledNotificationAfterEnd;
+    public boolean isEnabledNotificationAfterEnd() {
+        return enabledNotificationAfterEnd;
     }
 
-    public void setIsEnabledNotificationAfterEnd(boolean isEnabledNotificationAfterEnd) {
-        this.isEnabledNotificationAfterEnd = isEnabledNotificationAfterEnd;
+    public void setEnabledNotificationAfterEnd(boolean isEnabledNotificationAfterEnd) {
+        this.enabledNotificationAfterEnd = isEnabledNotificationAfterEnd;
     }
 
     public String getEmailToNotification() {

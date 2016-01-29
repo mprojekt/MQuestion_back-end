@@ -9,16 +9,23 @@ public class ResponseQuestionDto {
     private int numberCurrentPage;
     private int numberLastPage;
     private String jSessionID;
-    private List<QuestionDto> questions;
+    private List<QuestionDto> convertedQuestions;
 
     public ResponseQuestionDto() {
     }
 
-    public ResponseQuestionDto(int numberAllQuestion, int numberCurrentPage, String jSessionID, List<QuestionDto> questions) {
+    public ResponseQuestionDto(int numberAllQuestion, int numberCurrentPage, int numberLastPage, String jSessionID) {
+        this.numberAllQuestion = numberAllQuestion;
+        this.numberCurrentPage = numberCurrentPage;
+        this.numberLastPage = numberLastPage;
+        this.jSessionID = jSessionID;
+    }
+
+    public ResponseQuestionDto(int numberAllQuestion, int numberCurrentPage, String jSessionID, List<QuestionDto> convertedQuestions) {
         this.numberAllQuestion = numberAllQuestion;
         this.numberCurrentPage = numberCurrentPage;
         this.jSessionID = jSessionID;
-        this.questions = questions;
+        this.convertedQuestions = convertedQuestions;
     }
 
     public int getNumberAllQuestion() {
@@ -45,12 +52,12 @@ public class ResponseQuestionDto {
         this.numberLastPage = numberLastPage;
     }
 
-    public List<QuestionDto> getQuestions() {
-        return questions;
+    public List<QuestionDto> getConvertedQuestions() {
+        return convertedQuestions;
     }
 
-    public void setQuestions(List<QuestionDto> questions) {
-        this.questions = questions;
+    public void setConvertedQuestions(List<QuestionDto> convertedQuestions) {
+        this.convertedQuestions = convertedQuestions;
     }
 
     public String getjSessionID() {
@@ -68,7 +75,7 @@ public class ResponseQuestionDto {
         hash = 23 * hash + this.numberCurrentPage;
         hash = 23 * hash + this.numberLastPage;
         hash = 23 * hash + Objects.hashCode(this.jSessionID);
-        hash = 23 * hash + Objects.hashCode(this.questions);
+        hash = 23 * hash + Objects.hashCode(this.convertedQuestions);
         return hash;
     }
 
@@ -93,7 +100,7 @@ public class ResponseQuestionDto {
         if (!Objects.equals(this.jSessionID, other.jSessionID)) {
             return false;
         }
-        if (!Objects.equals(this.questions, other.questions)) {
+        if (!Objects.equals(this.convertedQuestions, other.convertedQuestions)) {
             return false;
         }
         return true;
@@ -106,7 +113,7 @@ public class ResponseQuestionDto {
                 ", numberCurrentPage=" + numberCurrentPage + 
                 ", numberLastPage=" + numberLastPage + 
                 ", jSessionID=" + jSessionID + 
-                ", questions=" + questions + 
+                ", convertedQuestions=" + convertedQuestions + 
                 "}";
     }
 
