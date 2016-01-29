@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User_info")
+@Table(name = "user_info")
 public class Voter implements Serializable {
     
     @Id

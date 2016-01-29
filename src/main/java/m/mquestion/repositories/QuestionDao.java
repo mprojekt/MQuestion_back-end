@@ -1,17 +1,32 @@
 package m.mquestion.repositories;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import m.mquestion.entities.Question;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface QuestionDao extends CrudRepository<Question, Long> {
-
-    public List<Question> findFirst5ByEndDateTimeBefore(LocalDateTime currentDateTime, Sort sort, Pageable pageable);
-    public List<Question> findFirst5ByEndDateTimeAfter(LocalDateTime currentDateTime, Sort sort, Pageable pageable);
+public interface QuestionDao extends CrudRepository<Question, Long>, PagingAndSortingRepository<Question, Long> {
+    
+    @Query(value = "SELECT * FROM Question q WHERE " +
+            "q.end_date < CURRENT_TIMESTAMP " + 
+            "ORDER BY q.end_date ASC LIMIT ?1, 5", nativeQuery = true)
+    public List<Question> findQuestionToShowResultPage(int start);
+    
+    @Query(value = "SELECT * FROM Question q WHERE " +
+            "q.end_date > CURRENT_TIMESTAMP " + 
+            "ORDER BY q.end_date ASC LIMIT ?1, 5", nativeQuery = true)
+    public List<Question> findQuestionToVotePage(int start);
+    
+    public List<Question> findByEndDateTime(Timestamp endDateTime);
+    
+    
     
 }

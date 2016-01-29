@@ -1,32 +1,44 @@
 package m.mquestion.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Answer")
+@Table(name = "answer")
 public class Answer implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String text;
+    
+    private String content;
+    
     @Column(name = "right")
-    private boolean isCorrectAnswer;
+    private boolean correctAnswer;
+    
     @Column(name = "number")
     private int currentVoteNumber;
+    
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Question.class)
+    @JoinColumn(name = "question_id")
+    @JsonBackReference
+    private Question targetQuestion;
 
     public Answer() {
     }
 
-    public Answer(String text) {
-        this.text = text;
+    public Answer(String content) {
+        this.content = content;
     }
 
     public Long getId() {
@@ -37,20 +49,28 @@ public class Answer implements Serializable {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public Question getTargetQuestion() {
+        return targetQuestion;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTargetQuestion(Question targetQuestion) {
+        this.targetQuestion = targetQuestion;
     }
 
-    public boolean isIsCorrectAnswer() {
-        return isCorrectAnswer;
+    public String getContent() {
+        return content;
     }
 
-    public void setIsCorrectAnswer(boolean isCorrectAnswer) {
-        this.isCorrectAnswer = isCorrectAnswer;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(boolean correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
     public int getCurrentVoteNumber() {
@@ -65,7 +85,7 @@ public class Answer implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.text);
+        hash = 97 * hash + Objects.hashCode(this.content);
         return hash;
     }
 
@@ -81,7 +101,7 @@ public class Answer implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.text, other.text)) {
+        if (!Objects.equals(this.content, other.content)) {
             return false;
         }
         return true;

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -17,13 +18,15 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableJpaRepositories(basePackages = "m.mquestion.repositories")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "m.mquestion.repository")
-@PropertySource(value = {"/WEB-INF/environment.properties"})
+@EnableSpringDataWebSupport
 public class PersistenceJPAConfig {
     
+    private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "m.mquestion.entities";
+    
     @Autowired
-    private Environment env;
+    private Environment env;    
     
     @Bean
     public PlatformTransactionManager transactionManager() {
@@ -41,7 +44,7 @@ public class PersistenceJPAConfig {
         
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("m.mquestion.entity");
+        factory.setPackagesToScan(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN);
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
         return factory.getObject();

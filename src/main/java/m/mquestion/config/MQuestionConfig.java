@@ -1,6 +1,7 @@
 package m.mquestion.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -15,5 +16,14 @@ public class MQuestionConfig {
     
     @Autowired
     private Environment env;
+    
+    @Bean
+    public Integer numberMaxQuestion(){
+        try{
+            return Integer.parseInt(env.getProperty("app.numberMaxQuestion"));
+        } catch (NumberFormatException nfe){
+            return 5;
+        }
+    }    
 
 }

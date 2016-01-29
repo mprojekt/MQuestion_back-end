@@ -1,22 +1,37 @@
 package m.mquestion.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Type")
+@Table(name = "type")
 public class Type implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
+    @JsonIgnore
+    private int id;    
     private String name;
+    
+    @OneToMany(mappedBy = "typeQuestion", targetEntity = Question.class)
+    @JsonBackReference
+    private List<Question> destiny;
+
+    public Type() {
+    }
+
+    public Type(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -32,6 +47,14 @@ public class Type implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Question> getDestiny() {
+        return destiny;
+    }
+
+    public void setDestiny(List<Question> destiny) {
+        this.destiny = destiny;
     }
 
     @Override

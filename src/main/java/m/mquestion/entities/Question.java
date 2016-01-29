@@ -1,6 +1,9 @@
 package m.mquestion.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -13,49 +16,73 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "Question")
+@Table(name = "question")
 public class Question implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;    
+    private Long id; 
+    
     private String title;
-    private String text;
+    
+    private String content;
+    
     @Column(name = "create_date")
-    private LocalDateTime createDateTime;
+    private Timestamp createDateTime;
+    
     @Column(name = "end_date")
-    private LocalDateTime endDateTime;
-    @Column(name = "shoe_answer")
+    private Timestamp endDateTime;
+    
+    @Column(name = "show_answer")
     private boolean isEnabledShowResultNow;
-    @Column(name = "number_answer")
-    private int numberAnswers;
+    
+    @Column(name = "number_answers")
+    private int numberAnswersToCheck;
+    
     @Column(name = "notification")
     private boolean isEnabledNotificationAfterEnd;
+    
     @Column(name = "email")
     private String emailToNotification;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id", targetEntity = Answer.class)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_id")
+    @JsonManagedReference
+    private Type typeQuestion;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "targetQuestion", targetEntity = Answer.class)
+    @JsonManagedReference
     private List<Answer> thisQuestionAnswers;
+    
     @ManyToMany
-    @JoinTable(
-            name = "User_info_Question",
-            joinColumns = { @JoinColumn(name = "id_question", referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "id_user_info", referencedColumnName = "id") })
+    @JoinTable(name = "question_has_user_info",
+            joinColumns = { @JoinColumn(name = "question_id", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_info_id", referencedColumnName = "id") })
+    @JsonIgnore
     private List<Voter> thisQuestionVoter;
 
     public Question() {
     }
 
-    public Question(String title, String text, LocalDateTime createDateTime, LocalDateTime endDateTime, boolean isEnabledShowResultNow, int numberAnswers) {
+    public Question(String title, String content, boolean isEnabledShowResultNow, int numberAnswersToCheck, 
+            boolean isEnabledNotificationAfterEnd, Type typeQuestion, List<Answer> thisQuestionAnswers) {
         this.title = title;
-        this.text = text;
-        this.createDateTime = createDateTime;
-        this.endDateTime = endDateTime;
+        this.content = content;
         this.isEnabledShowResultNow = isEnabledShowResultNow;
-        this.numberAnswers = numberAnswers;
+        this.numberAnswersToCheck = numberAnswersToCheck;
+        this.isEnabledNotificationAfterEnd = isEnabledNotificationAfterEnd;
+        this.typeQuestion = typeQuestion;
+        this.thisQuestionAnswers = thisQuestionAnswers;
     }
 
     public Long getId() {
@@ -82,7 +109,6 @@ public class Question implements Serializable {
         this.thisQuestionVoter = thisQuestionVoter;
     }
 
-
     public String getTitle() {
         return title;
     }
@@ -91,27 +117,27 @@ public class Question implements Serializable {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public LocalDateTime getCreateDateTime() {
+    public Timestamp getCreateDateTime() {
         return createDateTime;
     }
 
-    public void setCreateDateTime(LocalDateTime createDateTime) {
+    public void setCreateDateTime(Timestamp createDateTime) {
         this.createDateTime = createDateTime;
     }
 
-    public LocalDateTime getEndDateTime() {
+    public Timestamp getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
+    public void setEndDateTime(Timestamp endDateTime) {
         this.endDateTime = endDateTime;
     }
 
@@ -123,12 +149,12 @@ public class Question implements Serializable {
         this.isEnabledShowResultNow = isEnabledShowResultNow;
     }
 
-    public int getNumberAnswers() {
-        return numberAnswers;
+    public int getNumberAnswersToCheck() {
+        return numberAnswersToCheck;
     }
 
-    public void setNumberAnswers(int numberAnswers) {
-        this.numberAnswers = numberAnswers;
+    public void setNumberAnswersToCheck(int numberAnswersToCheck) {
+        this.numberAnswersToCheck = numberAnswersToCheck;
     }
 
     public boolean isIsEnabledNotificationAfterEnd() {
@@ -147,12 +173,18 @@ public class Question implements Serializable {
         this.emailToNotification = emailToNotification;
     }
 
+    public Type getTypeQuestion() {
+        return typeQuestion;
+    }
+
+    public void setTypeQuestion(Type typeQuestion) {
+        this.typeQuestion = typeQuestion;
+    }       
+
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.createDateTime);
-        hash = 97 * hash + Objects.hashCode(this.endDateTime);
         return hash;
     }
 
@@ -171,13 +203,7 @@ public class Question implements Serializable {
         if (!Objects.equals(this.title, other.title)) {
             return false;
         }
-        if (!Objects.equals(this.text, other.text)) {
-            return false;
-        }
-        if (!Objects.equals(this.createDateTime, other.createDateTime)) {
-            return false;
-        }
-        if (!Objects.equals(this.endDateTime, other.endDateTime)) {
+        if (!Objects.equals(this.content, other.content)) {
             return false;
         }
         return true;
