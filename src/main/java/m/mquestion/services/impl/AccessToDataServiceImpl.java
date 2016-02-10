@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import m.mquestion.domain.QuestionDto;
 import m.mquestion.domain.ResponseQuestionDto;
 import m.mquestion.entities.Question;
 import m.mquestion.repositories.QuestionDao;
@@ -22,12 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccessToDataServiceImpl implements AccessToDataService {
     
     @Autowired
-    private QuestionDao questionDao;
-    
-    @Override
-    public QuestionDto getQuestionById(long idQuestion) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    private QuestionDao questionDao;    
 
     @Override
     public ResponseQuestionDto getQuestionsToVoteByPage(int page) {

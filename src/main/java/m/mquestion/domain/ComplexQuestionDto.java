@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class QuestionDto {
+public class ComplexQuestionDto {
     
     private long id;
     private String type;
@@ -20,10 +20,10 @@ public class QuestionDto {
     private List<AnswerDto> answers;
     private Map<String, String> links;
 
-    public QuestionDto() {
+    public ComplexQuestionDto() {
     }
 
-    public QuestionDto(long id, String type, String title, String content, LocalDateTime createDate, 
+    public ComplexQuestionDto(long id, String type, String title, String content, LocalDateTime createDate, 
             LocalDateTime endDate, boolean showResultNow, int numberAnswer, List<AnswerDto> answers, 
             Map<String, String> links) {
         this.id = id;
@@ -145,7 +145,7 @@ public class QuestionDto {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final QuestionDto other = (QuestionDto) obj;
+        final ComplexQuestionDto other = (ComplexQuestionDto) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -184,7 +184,7 @@ public class QuestionDto {
 
     @Override
     public String toString() {
-        return "QuestionDto{" + 
+        return "ComplexQuestionDto{" + 
                 "id=" + id + 
                 ", type=" + type + 
                 ", title=" + title + 
