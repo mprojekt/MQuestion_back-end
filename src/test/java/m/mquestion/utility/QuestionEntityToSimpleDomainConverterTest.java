@@ -11,13 +11,12 @@ import m.mquestion.entities.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 public class QuestionEntityToSimpleDomainConverterTest {
     
-    Question question;
-    List<Question> questions;
-    QuestionEntityToSimpleDomainConverter instance;
+    private Question question;
+    private List<Question> questions;
+    private QuestionEntityToSimpleDomainConverter instance;
     
     public QuestionEntityToSimpleDomainConverterTest() {
     }
