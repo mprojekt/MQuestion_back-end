@@ -16,7 +16,7 @@ public class ComplexQuestionDto {
     private LocalDateTime endDate;
     private boolean showResultNow;
     private boolean answered;
-    private int numberAnswer;
+    private int numberAnswerToCheck;
     private List<AnswerDto> answers;
     private Map<String, String> links;
 
@@ -24,7 +24,7 @@ public class ComplexQuestionDto {
     }
 
     public ComplexQuestionDto(long id, String type, String title, String content, LocalDateTime createDate, 
-            LocalDateTime endDate, boolean showResultNow, int numberAnswer, List<AnswerDto> answers, 
+            LocalDateTime endDate, boolean showResultNow, int numberAnswerToCheck, List<AnswerDto> answers, 
             Map<String, String> links) {
         this.id = id;
         this.type = type;
@@ -33,7 +33,7 @@ public class ComplexQuestionDto {
         this.createDate = createDate;
         this.endDate = endDate;
         this.showResultNow = showResultNow;
-        this.numberAnswer = numberAnswer;
+        this.numberAnswerToCheck = numberAnswerToCheck;
         this.answers = answers;
         this.links = links;
     }
@@ -102,12 +102,12 @@ public class ComplexQuestionDto {
         this.showResultNow = showResultNow;
     }
 
-    public int getNumberAnswer() {
-        return numberAnswer;
+    public int getNumberAnswerToCheck() {
+        return numberAnswerToCheck;
     }
 
-    public void setNumberAnswer(int numberAnswer) {
-        this.numberAnswer = numberAnswer;
+    public void setNumberAnswerToCheck(int numberAnswerToCheck) {
+        this.numberAnswerToCheck = numberAnswerToCheck;
     }
 
     public List<AnswerDto> getAnswers() {
@@ -133,7 +133,7 @@ public class ComplexQuestionDto {
         hash = 71 * hash + Objects.hashCode(this.type);
         hash = 71 * hash + Objects.hashCode(this.title);
         hash = 71 * hash + Objects.hashCode(this.createDate);
-        hash = 71 * hash + this.numberAnswer;
+        hash = 71 * hash + this.numberAnswerToCheck;
         return hash;
     }
 
@@ -170,7 +170,7 @@ public class ComplexQuestionDto {
         if (this.answered != other.answered) {
             return false;
         }
-        if (this.numberAnswer != other.numberAnswer) {
+        if (this.numberAnswerToCheck != other.numberAnswerToCheck) {
             return false;
         }
         if (!Objects.equals(this.answers, other.answers)) {
@@ -193,7 +193,7 @@ public class ComplexQuestionDto {
                 ", endDate=" + endDate + 
                 ", showResultNow=" + showResultNow + 
                 ", answered=" + answered + 
-                ", numberAnswer=" + numberAnswer + 
+                ", numberAnswer=" + numberAnswerToCheck + 
                 ", answers=" + answers + 
                 ", links=" + links + 
                 "}";
