@@ -46,8 +46,8 @@ public class QuestionEntityToSimpleDomainConverterTest {
     
     @Test
     public void testConvertRightStructure_Question() {        
-        SimpleQuestionDto expResult = QuestionMakerToTests.makeExpResult(question);
-        SimpleQuestionDto result = instance.convert(question);
+        QuestionDto expResult = QuestionMakerToTests.makeExpResult(question);
+        QuestionDto result = instance.convert(question);
         assertEquals(expResult, result);
     }
     
@@ -86,8 +86,8 @@ public class QuestionEntityToSimpleDomainConverterTest {
 
     @Test
     public void testConvert_List() {
-        List<SimpleQuestionDto> expResult = QuestionMakerToTests.makeExpResult(questions);
-        List<SimpleQuestionDto> result = instance.convert(questions);
+        List<QuestionDto> expResult = QuestionMakerToTests.makeExpResult(questions);
+        List<QuestionDto> result = instance.convert(questions);
         assertEquals(expResult, result);
     }
     

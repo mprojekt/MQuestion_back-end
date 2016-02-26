@@ -21,15 +21,15 @@ public class QuestionEntityToSimpleDomainConverter {
         return baseUrl;
     }
     
-    public SimpleQuestionDto convert(Question question) throws IllegalArgumentException{
+    public QuestionDto convert(Question question) throws IllegalArgumentException{
         if((question == null) || (question.getId() == null) || (question.getId() <= 0))
             throw new IllegalArgumentException();
         
-        SimpleQuestionDto result = new SimpleQuestionDto();
+        QuestionDto result = new QuestionDto();
         result.setId(question.getId());
         result.setTitle(question.getTitle());
         result.setContent(question.getContent());
-        result.setEndDate(question.getEndDateTime().toLocalDateTime());
+        result.setEndDateTime(question.getEndDateTime().toLocalDateTime());
         
         Type type = question.getTypeQuestion();
         result.setType(type.getName());
@@ -41,7 +41,7 @@ public class QuestionEntityToSimpleDomainConverter {
         return result;
     }
     
-    public List<SimpleQuestionDto> convert(List<Question> questions) throws IllegalArgumentException{
+    public List<QuestionDto> convert(List<Question> questions) throws IllegalArgumentException{
         if((questions == null) || (questions.isEmpty()))
             throw new IllegalArgumentException();
         
@@ -49,10 +49,10 @@ public class QuestionEntityToSimpleDomainConverter {
         if(tmp.size() != questions.size())
             throw new IllegalArgumentException();
         
-        List<SimpleQuestionDto> result = new ArrayList<>();
+        List<QuestionDto> result = new ArrayList<>();
         for (Question question : questions) {
             try{
-                SimpleQuestionDto convertedQuestion = convert(question);
+                QuestionDto convertedQuestion = convert(question);
                 result.add(convertedQuestion);
             } catch(IllegalArgumentException e){
                 throw new IllegalArgumentException();

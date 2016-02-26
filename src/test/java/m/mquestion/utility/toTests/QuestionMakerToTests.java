@@ -52,7 +52,7 @@ public class QuestionMakerToTests {
     public static List<Question> makeQuestionsToConvert() {
         List<Question> result = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
-            Question q = QuestionMakerToTests.makeQuestionToConvert((long)i);
+            Question q = makeQuestionToConvert((long)i);
             result.add(q);
         }
         
@@ -106,12 +106,12 @@ public class QuestionMakerToTests {
         return result;        
     }
     
-    public static SimpleQuestionDto makeExpResult(Question question) {
-        SimpleQuestionDto result = new SimpleQuestionDto();
+    public static QuestionDto makeExpResult(Question question) {
+        QuestionDto result = new QuestionDto();
         result.setId(question.getId());
         result.setTitle(question.getTitle());
         result.setContent(question.getContent());
-        result.setEndDate(question.getEndDateTime().toLocalDateTime());
+        result.setEndDateTime(question.getEndDateTime().toLocalDateTime());
         
         Type type = question.getTypeQuestion();
         result.setType(type.getName());
@@ -123,10 +123,10 @@ public class QuestionMakerToTests {
         return result;
     }
 
-    public static List<SimpleQuestionDto> makeExpResult(List<Question> questions){
-        List<SimpleQuestionDto> result = new ArrayList<>();
+    public static List<QuestionDto> makeExpResult(List<Question> questions){
+        List<QuestionDto> result = new ArrayList<>();
         for (Question q : questions) {
-            SimpleQuestionDto simple = makeExpResult(q);
+            QuestionDto simple = makeExpResult(q);
             result.add(simple);
         }
         
