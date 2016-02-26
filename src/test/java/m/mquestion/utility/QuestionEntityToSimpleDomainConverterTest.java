@@ -1,15 +1,10 @@
 package m.mquestion.utility;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import m.mquestion.domain.*;
 import m.mquestion.entities.*;
-import org.junit.Before;
-import org.junit.Test;
+import m.mquestion.utility.toTests.QuestionMakerToTests;
+import org.junit.*;
 import static org.junit.Assert.*;
 
 public class QuestionEntityToSimpleDomainConverterTest {
@@ -23,8 +18,8 @@ public class QuestionEntityToSimpleDomainConverterTest {
     
     @Before
     public void setUp() {
-        question = makeQuestionToConvert(64l);
-        questions = makeQuestionsToConvert();
+        question = QuestionMakerToTests.makeQuestionToConvert(64l);
+        questions = QuestionMakerToTests.makeQuestionsToConvert();
         instance = new QuestionEntityToSimpleDomainConverter("example");        
     }
 
@@ -51,7 +46,7 @@ public class QuestionEntityToSimpleDomainConverterTest {
     
     @Test
     public void testConvertRightStructure_Question() {        
-        SimpleQuestionDto expResult = makeExpResult(question);
+        SimpleQuestionDto expResult = QuestionMakerToTests.makeExpResult(question);
         SimpleQuestionDto result = instance.convert(question);
         assertEquals(expResult, result);
     }
@@ -91,7 +86,7 @@ public class QuestionEntityToSimpleDomainConverterTest {
 
     @Test
     public void testConvert_List() {
-        List<SimpleQuestionDto> expResult = makeExpResult(questions);
+        List<SimpleQuestionDto> expResult = QuestionMakerToTests.makeExpResult(questions);
         List<SimpleQuestionDto> result = instance.convert(questions);
         assertEquals(expResult, result);
     }
@@ -132,68 +127,13 @@ public class QuestionEntityToSimpleDomainConverterTest {
     
     @Test
     public void testConvertTheSaneTwoQuestion_List() {
-        questions.add(makeQuestionToConvert(2l));
+        questions.add(QuestionMakerToTests.makeQuestionToConvert(2l));
         try{
             instance.convert(questions);
             fail("Should by IllegalArgumentException, because List Questions contains two the same Questions");
         } catch(IllegalArgumentException e){
             assertTrue(true);
         }        
-    }
-    
-    private Question makeQuestionToConvert(long id) {
-        Question result = new Question();
-        result.setId(id);
-        result.setTitle("Title");
-        result.setContent("Lorem Ipsum");
-        
-        Type type = new Type("test");
-        result.setTypeQuestion(type);
-        
-        LocalDateTime dateTimeNow = LocalDateTime.now();
-        result.setCreateDateTime(Timestamp.valueOf(dateTimeNow));
-        
-        LocalDateTime dateTimeEnd= dateTimeNow.plusDays(14);
-        result.setEndDateTime(Timestamp.valueOf(dateTimeEnd));        
-        
-        return result;
-    }
-
-    private List<Question> makeQuestionsToConvert() {
-        List<Question> result = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            Question q = makeQuestionToConvert((long)i);
-            result.add(q);
-        }
-        
-        return result;
-    }
-    
-    private SimpleQuestionDto makeExpResult(Question question) {
-        SimpleQuestionDto result = new SimpleQuestionDto();
-        result.setId(question.getId());
-        result.setTitle(question.getTitle());
-        result.setContent(question.getContent());
-        result.setEndDate(question.getEndDateTime().toLocalDateTime());
-        
-        Type type = question.getTypeQuestion();
-        result.setType(type.getName());
-        
-        Map<String, String> links = new HashMap<>();
-        links.put("self", "/question/" + question.getId());
-        result.setLinks(links);
-        
-        return result;
-    }
-
-    private List<SimpleQuestionDto> makeExpResult(List<Question> questions){
-        List<SimpleQuestionDto> result = new ArrayList<>();
-        for (Question q : questions) {
-            SimpleQuestionDto simple = makeExpResult(q);
-            result.add(simple);
-        }
-        
-        return result;
     }
     
 }
