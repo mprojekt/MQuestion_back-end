@@ -47,11 +47,11 @@ public class QuestionEntityToComplexDomainConverterTest {
     
     @Test
     public void testConvertRightStructure_Question(){
-        ComplexQuestionDto resultTrue = instance.convert(question, "session3");
-        ComplexQuestionDto expResultTrue = QuestionMakerToTests.makeExpQuestion(question, true);
+        ExtendedQuestionDto resultTrue = instance.convert(question, "session3");
+        ExtendedQuestionDto expResultTrue = QuestionMakerToTests.makeExpQuestion(question, true);
         assertEquals(expResultTrue, resultTrue);
-        ComplexQuestionDto resultFalse = instance.convert(question, "no_session");
-        ComplexQuestionDto expResultFalse = QuestionMakerToTests.makeExpQuestion(question, false);
+        ExtendedQuestionDto resultFalse = instance.convert(question, "no_session");
+        ExtendedQuestionDto expResultFalse = QuestionMakerToTests.makeExpQuestion(question, false);
         assertEquals(expResultFalse, resultFalse);
     }
     
@@ -90,11 +90,11 @@ public class QuestionEntityToComplexDomainConverterTest {
     
     @Test
     public void testConvert_List() {
-        List<ComplexQuestionDto> expResult = QuestionMakerToTests.makeExpQuestions(questions, true);
-        List<ComplexQuestionDto> result = instance.convert(questions, "session1");
+        List<ExtendedQuestionDto> expResult = QuestionMakerToTests.makeExpQuestions(questions, true);
+        List<ExtendedQuestionDto> result = instance.convert(questions, "session1");
         assertEquals(expResult, result);
-        List<ComplexQuestionDto> expResultFalse = QuestionMakerToTests.makeExpQuestions(questions, false);
-        List<ComplexQuestionDto> resultFalse = instance.convert(questions, "none");
+        List<ExtendedQuestionDto> expResultFalse = QuestionMakerToTests.makeExpQuestions(questions, false);
+        List<ExtendedQuestionDto> resultFalse = instance.convert(questions, "none");
         assertEquals(expResultFalse, resultFalse);
     }
     

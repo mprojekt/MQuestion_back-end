@@ -59,13 +59,13 @@ public class QuestionMakerToTests {
         return result;
     }
     
-    public static ComplexQuestionDto makeExpQuestion(Question question, boolean voted){
-        ComplexQuestionDto result = new ComplexQuestionDto();
+    public static ExtendedQuestionDto makeExpQuestion(Question question, boolean voted){
+        ExtendedQuestionDto result = new ExtendedQuestionDto();
         result.setId(question.getId());
         result.setTitle(question.getTitle());
         result.setContent(question.getContent());
-        result.setCreateDate(question.getCreateDateTime().toLocalDateTime());
-        result.setEndDate(question.getEndDateTime().toLocalDateTime());
+        result.setCreateDateTime(question.getCreateDateTime().toLocalDateTime());
+        result.setEndDateTime(question.getEndDateTime().toLocalDateTime());
         result.setNumberAnswerToCheck(question.getNumberAnswersToCheck());
         result.setShowResultNow(question.isEnabledShowResultNow());
                 
@@ -96,10 +96,10 @@ public class QuestionMakerToTests {
         return result;
     }
     
-    public static List<ComplexQuestionDto> makeExpQuestions(List<Question> questions, boolean voted){
-        List<ComplexQuestionDto> result = new ArrayList<>();
+    public static List<ExtendedQuestionDto> makeExpQuestions(List<Question> questions, boolean voted){
+        List<ExtendedQuestionDto> result = new ArrayList<>();
         for (Question q : questions) {
-            ComplexQuestionDto complex = makeExpQuestion(q, voted);
+            ExtendedQuestionDto complex = makeExpQuestion(q, voted);
             result.add(complex);
         }
         

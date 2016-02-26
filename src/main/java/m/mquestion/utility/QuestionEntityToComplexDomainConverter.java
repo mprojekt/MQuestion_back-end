@@ -22,16 +22,16 @@ public class QuestionEntityToComplexDomainConverter {
         return baseUrl;
     }
     
-    public ComplexQuestionDto convert(Question question, String jSessionId) throws IllegalArgumentException{
+    public ExtendedQuestionDto convert(Question question, String jSessionId) throws IllegalArgumentException{
         if((question == null) || (question.getId() == null) || (question.getId() <= 0))
             throw new IllegalArgumentException();
         
-        ComplexQuestionDto result = new ComplexQuestionDto();
+        ExtendedQuestionDto result = new ExtendedQuestionDto();
         result.setId(question.getId());
         result.setTitle(question.getTitle());
         result.setContent(question.getContent());
-        result.setCreateDate(question.getCreateDateTime().toLocalDateTime());
-        result.setEndDate(question.getEndDateTime().toLocalDateTime());
+        result.setCreateDateTime(question.getCreateDateTime().toLocalDateTime());
+        result.setEndDateTime(question.getEndDateTime().toLocalDateTime());
         result.setNumberAnswerToCheck(question.getNumberAnswersToCheck());
         result.setShowResultNow(question.isEnabledShowResultNow());
                 
@@ -70,7 +70,7 @@ public class QuestionEntityToComplexDomainConverter {
         return result;
     }
     
-    public List<ComplexQuestionDto> convert(List<Question> questions, String jSessionId) throws IllegalArgumentException{
+    public List<ExtendedQuestionDto> convert(List<Question> questions, String jSessionId) throws IllegalArgumentException{
         if((questions == null) || (questions.isEmpty()))
             throw new IllegalArgumentException();
         
@@ -78,10 +78,10 @@ public class QuestionEntityToComplexDomainConverter {
         if(tmp.size() != questions.size())
             throw new IllegalArgumentException();
         
-        List<ComplexQuestionDto> result = new ArrayList<>();
+        List<ExtendedQuestionDto> result = new ArrayList<>();
         for (Question question : questions) {
             try{
-                ComplexQuestionDto convertedQuestion = convert(question, jSessionId);
+                ExtendedQuestionDto convertedQuestion = convert(question, jSessionId);
                 result.add(convertedQuestion);
             } catch(IllegalArgumentException e){
                 throw new IllegalArgumentException();

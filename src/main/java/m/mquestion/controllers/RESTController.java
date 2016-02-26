@@ -1,9 +1,7 @@
 package m.mquestion.controllers;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import m.mquestion.domain.ResponseQuestionDto;
-import m.mquestion.entities.Question;
+import java.util.*;
+import m.mquestion.domain.*;
 import m.mquestion.services.AccessToDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +20,12 @@ public class RESTController {
     }
     
     @RequestMapping("/vote/{page}")
-    public ResponseQuestionDto getActiveQuestions(@PathVariable int page) { 
+    public QuestionDto getActiveQuestions(@PathVariable int page) { 
         return accessToDataService.getQuestionsToVoteByPage(page);
     }
     
     @RequestMapping("/result/{page}")
-    public ResponseQuestionDto getPreviewQuestions(@PathVariable int page) { 
+    public QuestionDto getPreviewQuestions(@PathVariable int page) { 
         return accessToDataService.getQuestionsToPreviewByPage(page);
     }
     

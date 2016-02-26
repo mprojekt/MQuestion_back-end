@@ -1,18 +1,11 @@
 package m.mquestion.services.impl;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import m.mquestion.domain.ResponseQuestionDto;
-import m.mquestion.entities.Question;
+import java.util.*;
+import m.mquestion.domain.*;
+import m.mquestion.entities.*;
 import m.mquestion.repositories.QuestionDao;
 import m.mquestion.services.AccessToDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +17,12 @@ public class AccessToDataServiceImpl implements AccessToDataService {
     private QuestionDao questionDao;    
 
     @Override
-    public ResponseQuestionDto getQuestionsToVoteByPage(int page) {
+    public QuestionDto getQuestionsToVoteByPage(int page) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public ResponseQuestionDto getQuestionsToPreviewByPage(int page) {
+    public QuestionDto getQuestionsToPreviewByPage(int page) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

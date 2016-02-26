@@ -1,10 +1,10 @@
 package m.mquestion.services;
 
-import m.mquestion.domain.ResponseQuestionDto;
+import m.mquestion.domain.*;
 
 public interface AccessToDataService {
     
-    public ResponseQuestionDto getQuestionsToVoteByPage(int page);
-    public ResponseQuestionDto getQuestionsToPreviewByPage(int page);
+    public QuestionDto getQuestionsToVoteByPage(int page);
+    public QuestionDto getQuestionsToPreviewByPage(int page);
 
 }
