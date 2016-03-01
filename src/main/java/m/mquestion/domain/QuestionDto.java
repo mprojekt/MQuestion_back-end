@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-public class QuestionDto {
+public class QuestionDto implements Convertable{
     
     private long id;
     private String type;
