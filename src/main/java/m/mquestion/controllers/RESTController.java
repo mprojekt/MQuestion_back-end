@@ -33,10 +33,5 @@ public class RESTController {
     public List<QuestionDto> getPreviewQuestions(@PathVariable int page) { 
         return accessToDataService.getQuestionsToPreviewByPage(page);
     }
-//    @RequestMapping("/test/{page}")
-//    public List<Question> startTest(@PathVariable int page, HttpServletResponse response) { 
-//        response.setContentType("application/json;charset=UTF-8");
-//        return accessToDataService.getTest(page);        
-//    }
 
 }
