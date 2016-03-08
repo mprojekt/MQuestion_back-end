@@ -19,16 +19,20 @@ public class RESTController {
         return "start";
     }
     
-    @RequestMapping("/vote/{page}")
-    public QuestionDto getActiveQuestions(@PathVariable int page) { 
-        return accessToDataService.getQuestionsToVoteByPage(page);
+    @RequestMapping("/question/{id}")
+    public QuestionDto getActiveQuestion(@PathVariable long id) { 
+        return accessToDataService.getQuestion(id, "a");
     }
     
-    @RequestMapping("/result/{page}")
-    public QuestionDto getPreviewQuestions(@PathVariable int page) { 
+    @RequestMapping("/simple/{id}")
+    public QuestionDto getPreviewQuestion(@PathVariable long id) { 
+        return accessToDataService.getQuestion(id);
+    }
+    
+    @RequestMapping("/list/{page}")
+    public List<QuestionDto> getPreviewQuestions(@PathVariable int page) { 
         return accessToDataService.getQuestionsToPreviewByPage(page);
     }
-    
 //    @RequestMapping("/test/{page}")
 //    public List<Question> startTest(@PathVariable int page, HttpServletResponse response) { 
 //        response.setContentType("application/json;charset=UTF-8");

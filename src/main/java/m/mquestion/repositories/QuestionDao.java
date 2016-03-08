@@ -1,12 +1,8 @@
 package m.mquestion.repositories;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import m.mquestion.entities.Question;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -17,7 +13,7 @@ public interface QuestionDao extends CrudRepository<Question, Long>, PagingAndSo
     
     @Query(value = "SELECT * FROM Question q WHERE " +
             "q.end_date < CURRENT_TIMESTAMP " + 
-            "ORDER BY q.end_date ASC LIMIT ?1, 5", nativeQuery = true)
+            "ORDER BY q.end_date DESC LIMIT ?1, 5", nativeQuery = true)
     public List<Question> findQuestionToShowResultPage(int start);
     
     @Query(value = "SELECT * FROM Question q WHERE " +

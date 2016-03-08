@@ -14,14 +14,14 @@ public class QuestionsConverter extends QuestionConverter{
     }    
     
     public List<QuestionDto> convert(List<Question> questions) throws IllegalArgumentException{
-        return convertList(questions, DtoType.SIMPLE, null);
+        return convertList(questions, QuestionDtoType.SIMPLE, null);
     }
 
     public List<ExtendedQuestionDto> convert(List<Question> questions, String jSessionId) throws IllegalArgumentException{
-        return convertList(questions, DtoType.EXTENDED, jSessionId);
+        return convertList(questions, QuestionDtoType.EXTENDED, jSessionId);
     }
     
-    private List convertList(List<Question> questions, DtoType type, String jSessionId) throws IllegalArgumentException{
+    private List convertList(List<Question> questions, QuestionDtoType type, String jSessionId) throws IllegalArgumentException{
         if(!isRightQuestions(questions) || isDoubleQuestions(questions))
             throw new IllegalArgumentException();
         
@@ -45,24 +45,5 @@ public class QuestionsConverter extends QuestionConverter{
     private boolean isDoubleQuestions(List<Question> questions){
         Set<Question> tmp = new HashSet<>(questions);
         return (tmp.size() != questions.size());            
-    }
-    
-    private enum DtoType{
-        SIMPLE {
-
-            @Override
-            public Convertable convertUsing(QuestionConverter qc, Question question, String jSessionId) {
-                return qc.convert(question);
-            }
-        }, 
-        EXTENDED {
-            
-            @Override
-            public Convertable convertUsing(QuestionConverter qc, Question question, String jSessionId) {
-                return qc.convert(question, jSessionId);
-            }
-        };
-        
-        public abstract Convertable convertUsing(QuestionConverter qc, Question question, String jSessionId);
     }
 }
