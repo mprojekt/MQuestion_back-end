@@ -4,7 +4,7 @@ this is RESTful service to proccessing questions from [MQuestion front-end]
 
 
 ### Version
-0.2.0
+0.3.0
 
 ### Tech
 
@@ -25,4 +25,5 @@ MQuestion back-end uses a number of open source projects to work properly:
 [spring]: <https://spring.io>	
 [spring-data-jpa]: <http://projects.spring.io/spring-data-jpa/>	
 [hibernate]: <http://hibernate.org>	
+[MySQL]: <https://www.mysql.com>
 [MQuestion front-end]: <https://github.com/mprojekt/MQuestion_front-end>
