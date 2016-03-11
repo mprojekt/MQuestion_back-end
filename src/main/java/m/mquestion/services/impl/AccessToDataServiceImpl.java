@@ -3,7 +3,7 @@ package m.mquestion.services.impl;
 import java.util.*;
 import m.mquestion.domain.*;
 import m.mquestion.entities.*;
-import m.mquestion.repositories.QuestionDao;
+import m.mquestion.repositories.*;
 import m.mquestion.services.AccessToDataService;
 import m.mquestion.utility.QuestionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,8 @@ public class AccessToDataServiceImpl implements AccessToDataService {
     
     @Autowired
     private QuestionDao questionDao;
+    @Autowired
+    private SiblingQuestionDao siblingQuestionDao;
     @Autowired
     private Environment env;
     
@@ -39,21 +41,31 @@ public class AccessToDataServiceImpl implements AccessToDataService {
     @Override
     public List<QuestionDto> getQuestionsToVoteByPage(int page) {
         setQuestionsConverter();
-        List<Question> questions = questionDao.findQuestionToVotePage(page);
+        List<Question> questions = questionDao.findOpenQuestionPage(page);
         return qc.convert(questions);
     }
 
     @Override
     public List<QuestionDto> getQuestionsToPreviewByPage(int page) {
         setQuestionsConverter();
-        List<Question> questions = questionDao.findQuestionToShowResultPage(page);
+        List<Question> questions = questionDao.findCloseQuestionPage(page);
         return qc.convert(questions);
     }
 
     @Override
-    public Map<String, QuestionDto> getSiblingQuestions(long id) {
+    public Map<String, QuestionDto> getSiblingQuestions(long id) {        
+        Question actual = questionDao.findOne(id);
+        Question previous = siblingQuestionDao.getPreviusQuestion(actual);
+        Question next = siblingQuestionDao.getNextQuestion(actual);
+        
         setQuestionsConverter();
-        throw new UnsupportedOperationException("Not supported yet.");
+        QuestionDto previusDto = qc.convert(previous);
+        QuestionDto nextDto = qc.convert(next);
+        
+        Map<String, QuestionDto> result = new HashMap<>();
+        result.put("prevQuestion", previusDto);
+        result.put("nextQuestion", nextDto);
+        return result;
     }
     
     private void setQuestionsConverter(){

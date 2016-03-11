@@ -1,6 +1,5 @@
 package m.mquestion.repositories;
 
-import java.sql.Timestamp;
 import java.util.List;
 import m.mquestion.entities.Question;
 import org.springframework.data.jpa.repository.Query;
@@ -13,16 +12,12 @@ public interface QuestionDao extends CrudRepository<Question, Long>, PagingAndSo
     
     @Query(value = "SELECT * FROM Question q WHERE " +
             "q.end_date < CURRENT_TIMESTAMP " + 
-            "ORDER BY q.end_date DESC LIMIT ?1, 5", nativeQuery = true)
-    public List<Question> findQuestionToShowResultPage(int start);
+            "ORDER BY q.end_date DESC, q.id ASC LIMIT ?1, 5", nativeQuery = true)
+    public List<Question> findCloseQuestionPage(int start);
     
     @Query(value = "SELECT * FROM Question q WHERE " +
             "q.end_date > CURRENT_TIMESTAMP " + 
-            "ORDER BY q.end_date ASC LIMIT ?1, 5", nativeQuery = true)
-    public List<Question> findQuestionToVotePage(int start);
-    
-    public List<Question> findByEndDateTime(Timestamp endDateTime);
-    
-    
-    
+            "ORDER BY q.end_date ASC, q.id DESC LIMIT ?1, 5", nativeQuery = true)
+    public List<Question> findOpenQuestionPage(int start);    
+        
 }
