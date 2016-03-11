@@ -1,6 +1,7 @@
 package m.mquestion.config;
 
 import javax.servlet.Filter;
+import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -24,7 +25,10 @@ public class Initializer  extends AbstractAnnotationConfigDispatcherServletIniti
     
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{new OpenEntityManagerInViewFilter()};
+        return new Filter[]{
+            new OpenEntityManagerInViewFilter(), 
+            new OpenSessionInViewFilter()
+        };
     }    
 
 }
