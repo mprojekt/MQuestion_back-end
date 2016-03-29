@@ -2,7 +2,7 @@ package m.mquestion.controllers;
 
 import java.util.*;
 import m.mquestion.domain.*;
-import m.mquestion.services.AccessToDataService;
+import m.mquestion.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,8 @@ public class RESTController {
     
     @Autowired
     private AccessToDataService accessToDataService;
+    @Autowired
+    private StatisticService statisticService;
         
     @RequestMapping("/question/{id}")
     public QuestionDto getActiveQuestion(@PathVariable long id) { 
@@ -38,7 +40,7 @@ public class RESTController {
     }
     
     @RequestMapping("/result/{page}")
-    public ResponseEntity<?>  getResultQuestions(@PathVariable int page) {
+    public ResponseEntity<?> getResultQuestions(@PathVariable int page) {
         List<QuestionDto> result;
         try{
             result = accessToDataService.getQuestionsToResultByPage(page);
@@ -51,6 +53,11 @@ public class RESTController {
     @RequestMapping("/sibling/{id}")
     public Map getSiblingQuestion(@PathVariable long id){
         return accessToDataService.getSiblingQuestions(id);
+    }
+    
+    @RequestMapping("/statistic")
+    public StatisticQuestion getStatistic(){
+        return statisticService.getStatistic();
     }
 
 }

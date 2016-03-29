@@ -14,4 +14,13 @@ public class PaginationTest {
         assertEquals(0, Pagination.calculateNumberStartQuestion(-3));
     }
     
+    @Test
+    public void testCalculateNumberMaxPage() {
+        assertEquals(0, Pagination.calculateNumberMaxPage(0));
+        assertEquals(4, Pagination.calculateNumberMaxPage(20));
+        assertEquals(8, Pagination.calculateNumberMaxPage(36));
+        
+        assertEquals(0, Pagination.calculateNumberMaxPage(-6));
+    }
+    
 }
