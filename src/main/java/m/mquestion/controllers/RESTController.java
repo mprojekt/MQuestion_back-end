@@ -4,6 +4,8 @@ import java.util.*;
 import m.mquestion.domain.*;
 import m.mquestion.services.AccessToDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +15,7 @@ public class RESTController {
     
     @Autowired
     private AccessToDataService accessToDataService;
-    
-    @RequestMapping("/")
-    public String start() { 
-        return "start";
-    }
-    
+        
     @RequestMapping("/question/{id}")
     public QuestionDto getActiveQuestion(@PathVariable long id) { 
         return accessToDataService.getQuestion(id, "a");
@@ -29,9 +26,31 @@ public class RESTController {
         return accessToDataService.getQuestion(id);
     }
     
-    @RequestMapping("/list/{page}")
-    public List<QuestionDto> getPreviewQuestions(@PathVariable int page) { 
-        return accessToDataService.getQuestionsToPreviewByPage(page);
+    @RequestMapping("/vote/{page}")
+    public ResponseEntity<?> getVoteQuestions(@PathVariable int page) { 
+        List<QuestionDto> result;
+        try{
+            result = accessToDataService.getQuestionsToVoteByPage(page);
+        } catch(IllegalArgumentException iae){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.ok(result);
+    }
+    
+    @RequestMapping("/result/{page}")
+    public ResponseEntity<?>  getResultQuestions(@PathVariable int page) {
+        List<QuestionDto> result;
+        try{
+            result = accessToDataService.getQuestionsToResultByPage(page);
+        } catch(IllegalArgumentException iae){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.ok(result);
+    }
+    
+    @RequestMapping("/sibling/{id}")
+    public Map getSiblingQuestion(@PathVariable long id){
+        return accessToDataService.getSiblingQuestions(id);
     }
 
 }

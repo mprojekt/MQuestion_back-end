@@ -5,6 +5,7 @@ import m.mquestion.domain.*;
 import m.mquestion.entities.*;
 import m.mquestion.repositories.*;
 import m.mquestion.services.AccessToDataService;
+import m.mquestion.utility.Pagination;
 import m.mquestion.utility.QuestionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -25,30 +26,32 @@ public class AccessToDataServiceImpl implements AccessToDataService {
     private QuestionsConverter qc;
 
     @Override
-    public QuestionDto getQuestion(long id) {
+    public QuestionDto getQuestion(long id) throws IllegalArgumentException{
         setQuestionsConverter();
         Question question = questionDao.findOne(id);
         return qc.convert(question);
     }
     
     @Override
-    public ExtendedQuestionDto getQuestion(long id, String jSessionId) {
+    public ExtendedQuestionDto getQuestion(long id, String jSessionId) throws IllegalArgumentException{
         setQuestionsConverter();
         Question question = questionDao.findOne(id);
         return qc.convert(question, jSessionId);
     }
 
     @Override
-    public List<QuestionDto> getQuestionsToVoteByPage(int page) {
+    public List<QuestionDto> getQuestionsToVoteByPage(int page) throws IllegalArgumentException{
         setQuestionsConverter();
-        List<Question> questions = questionDao.findOpenQuestionPage(page);
+        int startNumberQuestion = Pagination.calculateNumberStartQuestion(page);
+        List<Question> questions = questionDao.findOpenQuestionPage(startNumberQuestion);
         return qc.convert(questions);
     }
 
     @Override
-    public List<QuestionDto> getQuestionsToPreviewByPage(int page) {
+    public List<QuestionDto> getQuestionsToResultByPage(int page) throws IllegalArgumentException{
         setQuestionsConverter();
-        List<Question> questions = questionDao.findCloseQuestionPage(page);
+        int startNumberQuestion = Pagination.calculateNumberStartQuestion(page);
+        List<Question> questions = questionDao.findCloseQuestionPage(startNumberQuestion);
         return qc.convert(questions);
     }
 

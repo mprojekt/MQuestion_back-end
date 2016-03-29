@@ -2,6 +2,7 @@ package m.mquestion.repositories;
 
 import java.util.List;
 import m.mquestion.entities.Question;
+import m.mquestion.utility.Pagination;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -12,12 +13,14 @@ public interface QuestionDao extends CrudRepository<Question, Long>, PagingAndSo
     
     @Query(value = "SELECT * FROM Question q WHERE " +
             "q.end_date < CURRENT_TIMESTAMP " + 
-            "ORDER BY q.end_date DESC, q.id ASC LIMIT ?1, 5", nativeQuery = true)
+            "ORDER BY q.end_date DESC, q.id ASC LIMIT ?1, " +
+            Pagination.MAX_PAGE_ON_PAGE, nativeQuery = true)
     public List<Question> findCloseQuestionPage(int start);
     
     @Query(value = "SELECT * FROM Question q WHERE " +
             "q.end_date > CURRENT_TIMESTAMP " + 
-            "ORDER BY q.end_date ASC, q.id DESC LIMIT ?1, 5", nativeQuery = true)
+            "ORDER BY q.end_date ASC, q.id DESC LIMIT ?1, " +
+            Pagination.MAX_PAGE_ON_PAGE, nativeQuery = true)
     public List<Question> findOpenQuestionPage(int start);    
         
 }
